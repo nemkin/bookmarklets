@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
     <title>Bookmarklets</title>
-</head>
-<body>
+    <style>
+      #bookmarkletLinks {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
     <header>
-        <h1>Bookmarklets</h1>
+      <h1>Bookmarklets</h1>
     </header>
 
-    <p>Generate Bookmarklets, that you can drag-and-drop in your browser as bookmarks:</p>
-    
     <form id="bookmarkletForm">
+      <p>
+        Generate Bookmarklets for saving the current page as a GitHub issue or sending via e-mail:
+      </p>
+
       <table>
         <tr>
           <td><label for="githubUsername">GitHub Username:</label></td>
@@ -28,30 +37,54 @@
           <td><input type="email" id="email" name="email" required></td>
         </tr>
         <tr>
-          <td colspan="2"><button type="button" onclick="generateBookmarklets()">Generate Bookmarklets</button></td>
+          <td colspan="2">
+            <button type="button" onclick="generateBookmarklets()">Generate Bookmarklets</button>
+            <button type="button" onclick="goBack()">Go Back</button>
+          </td>
         </tr>
       </table>
     </form>
 
-    <p>
+    <div id="bookmarkletLinks">
+      <p>
+        Here are the bookmarklets, drag-and-drop them to your bookmarks bar:
+      </p>
+      <p>
       <ul>
         <li><a href="#" id="saveToGitHub">Save current page to GitHub issues</a></li>
         <li><a href="#" id="sendToEmail">Send current page to e-mail</a></li>
       </ul>
-    </p>
+      </p>
+    </div>
 
     <script>
-        function generateBookmarklets() {
-            const githubUsername = document.getElementById('githubUsername').value;
-            const projectName = document.getElementById('projectName').value;
-            const email = document.getElementById('email').value;
+      function generateBookmarklets() {
+        const githubUsername = document.getElementById('githubUsername').value;
+        const projectName = document.getElementById('projectName').value;
+        const email = document.getElementById('email').value;
 
-            const saveToGitHubURL = `javascript:window.open("https://github.com/${githubUsername}/${projectName}/issues/new?title="+encodeURIComponent(document.title)+"&body="+encodeURIComponent(window.location.href))`;
-            const sendToEmailURL = `javascript:window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=${email}&su="+encodeURIComponent(document.title)+"&body="+encodeURIComponent(window.location.href))`;
+        const saveToGitHubURL = `javascript:window.open("https://github.com/${githubUsername}/${projectName}/issues/new?title="+encodeURIComponent(document.title)+"&body="+encodeURIComponent(window.location.href))`;
+        const sendToEmailURL = `javascript:window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=${email}&su="+encodeURIComponent(document.title)+"&body="+encodeURIComponent(window.location.href))`;
 
-            document.getElementById('saveToGitHub').href = saveToGitHubURL;
-            document.getElementById('sendToEmail').href = sendToEmailURL;
-        }
+        // Set the URLs
+        document.getElementById('saveToGitHub').href = saveToGitHubURL;
+        document.getElementById('sendToEmail').href = sendToEmailURL;
+
+        // Hide the form, show the bookmarklet links
+        document.getElementById('bookmarkletForm').style.display = 'none';
+        document.getElementById('bookmarkletLinks').style.display = 'block';
+      }
+
+      function goBack() {
+        // Clear the generated URLs
+        document.getElementById('saveToGitHub').href = '#';
+        document.getElementById('sendToEmail').href = '#';
+
+        // Show the form, hide the bookmarklet links
+        document.getElementById('bookmarkletForm').style.display = 'block';
+        document.getElementById('bookmarkletLinks').style.display = 'none';
+      }
     </script>
-</body>
+  </body>
+
 </html>
