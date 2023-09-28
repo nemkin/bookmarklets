@@ -11,28 +11,33 @@
         <h1>Bookmarklets</h1>
     </header>
 
-    <p>
-        Generate Bookmarklets, that you can drag-and-drop in your browser as bookmarks:
-    </p>
+    <p>Generate Bookmarklets, that you can drag-and-drop in your browser as bookmarks:</p>
     
     <form id="bookmarkletForm">
-        <label for="githubUsername">GitHub Username:</label>
-        <input type="text" id="githubUsername" name="githubUsername" required><br>
-
-        <label for="projectName">GitHub Project Name:</label>
-        <input type="text" id="projectName" name="projectName" required><br>
-
-        <label for="email">Email Address:</label>
-        <input type="email" id="email" name="email" required><br>
-
-        <button type="button" onclick="generateBookmarklets()">Generate Bookmarklets</button>
+      <table>
+        <tr>
+          <td><label for="githubUsername">GitHub Username:</label></td>
+          <td><input type="text" id="githubUsername" name="githubUsername" required></td>
+        </tr>
+        <tr>
+          <td><label for="projectName">GitHub Project Name:</label></td>
+          <td><input type="text" id="projectName" name="projectName" required></td>
+        </tr>
+        <tr>
+          <td><label for="email">Email Address:</label></td>
+          <td><input type="email" id="email" name="email" required></td>
+        </tr>
+        <tr>
+          <td colspan="2"><button type="button" onclick="generateBookmarklets()">Generate Bookmarklets</button></td>
+        </tr>
+      </table>
     </form>
 
     <p>
-        <ul>
-            <li><a href="#" id="saveToGitHub">Save current page to GitHub issues</a></li>
-            <li><a href="#" id="sendToEmail">Send current page to e-mail</a></li>
-        </ul>
+      <ul>
+        <li><a href="#" id="saveToGitHub">Save current page to GitHub issues</a></li>
+        <li><a href="#" id="sendToEmail">Send current page to e-mail</a></li>
+      </ul>
     </p>
 
     <script>
