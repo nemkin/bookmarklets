@@ -50,8 +50,8 @@
       </p>
       <p>
       <ul>
-        <li><a href="#" id="saveToGitHub">Save current page to GitHub issues</a></li>
-        <li><a href="#" id="sendToEmail">Send current page to e-mail</a></li>
+        <li><a href="#" id="saveToGitHub">#</a></li>
+        <li><a href="#" id="sendToEmail">#</a></li>
       </ul>
       </p>
       <button type="button" onclick="goBack()">Go Back</button>
@@ -63,8 +63,15 @@
         const projectName = document.getElementById('projectName').value;
         const email = document.getElementById('email').value;
 
+        const saveToGitHubLabel = `Save current page to https://github.com/${githubUsername}/${projectName}/issues/`
+        const sendToEmailLabel = `Send current page to ${email}`
+
         const saveToGitHubURL = `javascript:window.open("https://github.com/${githubUsername}/${projectName}/issues/new?title="+encodeURIComponent(document.title)+"&body="+encodeURIComponent(window.location.href))`;
         const sendToEmailURL = `javascript:window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=${email}&su="+encodeURIComponent(document.title)+"&body="+encodeURIComponent(window.location.href))`;
+
+        // Set the Labels
+        document.getElementById('saveToGitHub').textContent  = saveToGitHubLabel;
+        document.getElementById('sendToEmail').textContent  = sendToEmailLabel;
 
         // Set the URLs
         document.getElementById('saveToGitHub').href = saveToGitHubURL;
@@ -76,6 +83,10 @@
       }
 
       function goBack() {
+        // Clear the generated Labels
+        document.getElementById('saveToGitHub').textContent  = '#';
+        document.getElementById('sendToEmail').textContent  = '#';
+
         // Clear the generated URLs
         document.getElementById('saveToGitHub').href = '#';
         document.getElementById('sendToEmail').href = '#';
