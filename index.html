@@ -20,7 +20,7 @@
 
     <form id="bookmarkletForm">
       <p>
-        Generate Bookmarklets for saving the current page as a GitHub issue or sending via e-mail:
+        Generate Bookmarklets for saving the current page as a GitHub issue, sending via e-mail, or generating the VIK weekly archive link:
       </p>
 
       <table>
@@ -52,6 +52,7 @@
       <ul>
         <li><a href="#" id="saveToGitHub">#</a></li>
         <li><a href="#" id="sendToEmail">#</a></li>
+        <li><a href="#" id="vikWeekly">Generate VIK Weekly Link</a></li>
       </ul>
       </p>
       <button type="button" onclick="goBack()">Go Back</button>
@@ -63,19 +64,29 @@
         const projectName = document.getElementById('projectName').value;
         const email = document.getElementById('email').value;
 
-        const saveToGitHubLabel = `Save current page to https://github.com/${githubUsername}/${projectName}/issues/`
-        const sendToEmailLabel = `Send current page to ${email}`
+        const saveToGitHubLabel = `Save current page to https://github.com/${githubUsername}/${projectName}/issues/`;
+        const sendToEmailLabel = `Send current page to ${email}`;
+        const vikWeeklyLabel = 'Generate VIK Weekly Link for current year and week';
 
-        const saveToGitHubURL = `javascript:window.open("https://github.com/${githubUsername}/${projectName}/issues/new?title="+encodeURIComponent(document.title)+"&body="+encodeURIComponent(window.location.href))`;
-        const sendToEmailURL = `javascript:window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=${email}&su="+encodeURIComponent(document.title)+"&body="+encodeURIComponent(window.location.href))`;
+        const saveToGitHubURL = `javascript:window.open('https://github.com/${githubUsername}/${projectName}/issues/new?title='+encodeURIComponent(document.title)+'&body='+encodeURIComponent(window.location.href))`;
+        const sendToEmailURL = `javascript:window.open('https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=${email}&su='+encodeURIComponent(document.title)+'&body='+encodeURIComponent(window.location.href))`;
+
+        const vikWeeklyURL = `javascript:(function() {
+          var currentYear = new Date().getFullYear();
+          var currentWeek = Math.ceil(((new Date() - new Date(currentYear, 0, 1)) / 86400000 + new Date(currentYear, 0, 1).getDay() + 1) / 7);
+          var url = 'https://vik.bme.hu/static/weekly_archives/' + currentYear + '/VIK_Weekly_' + currentWeek + '_het.htm';
+          window.location.href = url;
+        })();`;
 
         // Set the Labels
-        document.getElementById('saveToGitHub').textContent  = saveToGitHubLabel;
-        document.getElementById('sendToEmail').textContent  = sendToEmailLabel;
+        document.getElementById('saveToGitHub').textContent = saveToGitHubLabel;
+        document.getElementById('sendToEmail').textContent = sendToEmailLabel;
+        document.getElementById('vikWeekly').textContent = vikWeeklyLabel;
 
         // Set the URLs
         document.getElementById('saveToGitHub').href = saveToGitHubURL;
         document.getElementById('sendToEmail').href = sendToEmailURL;
+        document.getElementById('vikWeekly').href = vikWeeklyURL;
 
         // Hide the form, show the bookmarklet links
         document.getElementById('bookmarkletForm').style.display = 'none';
@@ -84,12 +95,14 @@
 
       function goBack() {
         // Clear the generated Labels
-        document.getElementById('saveToGitHub').textContent  = '#';
-        document.getElementById('sendToEmail').textContent  = '#';
+        document.getElementById('saveToGitHub').textContent = '#';
+        document.getElementById('sendToEmail').textContent = '#';
+        document.getElementById('vikWeekly').textContent = 'Generate VIK Weekly Link';
 
         // Clear the generated URLs
         document.getElementById('saveToGitHub').href = '#';
         document.getElementById('sendToEmail').href = '#';
+        document.getElementById('vikWeekly').href = '#';
 
         // Show the form, hide the bookmarklet links
         document.getElementById('bookmarkletForm').style.display = 'block';
