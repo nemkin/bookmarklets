@@ -72,11 +72,14 @@
         const sendToEmailURL = `javascript:window.open('https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=${email}&su='+encodeURIComponent(document.title)+'&body='+encodeURIComponent(window.location.href))`;
 
         const vikWeeklyURL = `javascript:(function() {
-          var currentYear = new Date().getFullYear();
-          var currentWeek = Math.ceil(((new Date() - new Date(currentYear, 0, 1)) / 86400000 + new Date(currentYear, 0, 1).getDay() + 1) / 7);
-          var url = 'https://vik.bme.hu/static/weekly_archives/' + currentYear + '/VIK_Weekly_' + currentWeek + '_het.htm';
-          window.location.href = url;
-        })();`;
+  var date = new Date();
+  date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+  var week1 = new Date(date.getFullYear(), 0, 4);
+  var week = 1 + Math.round(((date - week1) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+  var year = date.getFullYear();
+  var url = "https://vik.bme.hu/static/weekly_archives/" + year + "/VIK_Weekly_" + week + "_het.htm";
+  window.location.href = url;
+})();`;
 
         // Set the Labels
         document.getElementById('saveToGitHub').textContent = saveToGitHubLabel;
